@@ -8,45 +8,12 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Georgia', serif;
+      background: url('your-wedding-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: white;
       text-align: center;
       overflow: hidden;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       position: relative;
-    }
-    #background {
-      background: url('letter-picture.jpg') no-repeat center center fixed;
-      background-size: cover;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      transition: transform 2s ease;
-    }
-    #background.opened {
-      transform: scaleY(0);
-    }
-    .center-content {
-      position: relative;
-      z-index: 1;
-    }
-    .image-container {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto;
-      border: 5px solid white;
-      background-image: url('engraved-names.jpg');
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-    }
-    .click-text {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-      font-weight: bold;
-      cursor: pointer;
     }
     nav {
       background-color: rgba(0, 0, 0, 0.7);
@@ -70,6 +37,7 @@
     .hero {
       margin-top: 120px;
       padding: 2rem;
+      display: none;
     }
     .animated-name span {
       display: inline-block;
@@ -131,17 +99,51 @@
       padding: 0.5rem;
       border-radius: 8px;
     }
+    #yourWeddingBg {
+      background: url('your-wedding-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+      transition: transform 2s ease;
+    }
+    #yourWeddingBg.opened {
+      display: block;
+      transform: translateX(0);
+    }
+    .image-container {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .image-container img {
+      width: 300px;
+      height: auto;
+      transition: transform 2s ease;
+    }
+    .click-text {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <div id="background"></div>
+  <!-- Hidden Background -->
+  <div id="yourWeddingBg"></div>
 
-  <div class="center-content">
-    <div class="image-container" id="imageContainer"></div>
-    <p class="click-text" id="clickText">Click to Open</p>
-  </div>
-
+  <!-- Navigation -->
   <nav>
     <ul>
       <li><a href="#">ABOUT</a></li>
@@ -153,7 +155,14 @@
     </ul>
   </nav>
 
-  <div class="hero">
+  <!-- Image Container -->
+  <div class="image-container" id="imageContainer">
+    <img src="letter-picture.jpg" alt="Letter Picture">
+    <div class="click-text" id="clickText">Click to Open</div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero hidden" id="heroSection">
     <h1 class="animated-name" id="nameTitle"></h1>
     <p>May 2, 2025 in Masjid Ar Rahah</p>
 
@@ -169,7 +178,8 @@
     <p class="quote">"He has put love and mercy between your hearts. Indeed, in that are signs for a people who reflect"<br/><strong>— Quran 30:21</strong></p>
   </div>
 
-  <audio id="musicPlayer" controls autoplay loop style="display: none;">
+  <!-- Music Player -->
+  <audio id="musicPlayer" controls autoplay loop>
     <source src="song1.mp3" type="audio/mp3">
     <source src="song2.mp3" type="audio/mp3">
     Your browser does not support the audio element.
@@ -194,43 +204,6 @@
 
       const second = 1000,
             minute = second * 60,
-            hour = minute * 60,
-            day = hour * 24;
-
-      const days = Math.floor(gap / day),
-            hours = Math.floor((gap % day) / hour),
-            minutes = Math.floor((gap % hour) / minute),
-            seconds = Math.floor((gap % minute) / second);
-
-      document.getElementById('days').innerText = days;
-      document.getElementById('hours').innerText = hours;
-      document.getElementById('minutes').innerText = minutes;
-      document.getElementById('seconds').innerText = seconds;
-    };
-    setInterval(countdown, 1000);
-
-    // Droplets
-    const createDroplet = () => {
-      const droplet = document.createElement('div');
-      droplet.classList.add('droplet');
-      droplet.style.setProperty('--x', Math.random());
-      droplet.style.left = `${Math.random() * 100}vw`;
-      document.body.appendChild(droplet);
-      setTimeout(() => droplet.remove(), 5000);
-    };
-    setInterval(createDroplet, 200);
-
-    // Click to open background and play music
-    const imageContainer = document.getElementById("imageContainer");
-    const clickText = document.getElementById("clickText");
-    const background = document.getElementById("background");
-    const musicPlayer = document.getElementById("musicPlayer");
-
-    imageContainer.addEventListener("click", () => {
-      background.classList.add("opened");
-      musicPlayer.play();
-      clickText.style.display = "none";  // Hide "Click to Open" text after click
-    });
-  </script>
-</body>
-</html>
+            hour = minute *
+::contentReference[oaicite:0]{index=0}
+ 
