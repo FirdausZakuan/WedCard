@@ -2,165 +2,235 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Afifah & Firdaus</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      height: 100%;
-      font-family: 'Georgia', serif;
-      overflow: hidden;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #111;
-      color: #fff;
-    }
-    .intro {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #1a1a1a;
+      font-family: 'Georgia', serif;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      z-index: 1000;
-      cursor: pointer;
-    }
-    .intro img {
-      width: 120px;
-      height: auto;
-      margin-bottom: 20px;
-    }
-    .intro p {
-      font-size: 1.5rem;
-      color: #ccc;
-    }
-    .main {
-      display: none;
-      background: url('your-wedding-bg') no-repeat center center/cover;
-      height: 100%;
-      text-align: center;
-      padding-top: 100px;
       position: relative;
     }
-    .name {
-      font-size: 3rem;
+    #background {
+      background: url('letter-picture.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      transition: transform 2s ease;
+    }
+    #background.opened {
+      transform: scaleY(0);
+    }
+    .center-content {
+      position: relative;
+      z-index: 1;
+    }
+    .image-container {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      border: 5px solid white;
+      background-image: url('engraved-names.jpg');
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+    }
+    .click-text {
+      margin-top: 1rem;
+      font-size: 1.5rem;
       font-weight: bold;
-      display: inline-block;
+      cursor: pointer;
     }
-    .name span {
+    nav {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 1rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    nav li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hero {
+      margin-top: 120px;
+      padding: 2rem;
+    }
+    .animated-name span {
+      display: inline-block;
       opacity: 0;
-      display: inline-block;
-      transform: translateY(30px);
-      animation: reveal 0.5s forwards;
+      transform: translateY(-20px);
+      animation: fadeInUp 0.5s forwards;
     }
-    .name span:nth-child(1) { animation-delay: 0.1s; }
-    .name span:nth-child(2) { animation-delay: 0.2s; }
-    .name span:nth-child(3) { animation-delay: 0.3s; }
-    .name span:nth-child(4) { animation-delay: 0.4s; }
-    .name span:nth-child(5) { animation-delay: 0.5s; }
-    .name span:nth-child(6) { animation-delay: 0.6s; }
-    .name span:nth-child(7) { animation-delay: 0.7s; }
-    .name span:nth-child(8) { animation-delay: 0.8s; }
-    .name span:nth-child(9) { animation-delay: 0.9s; }
-
-    @keyframes reveal {
+    .animated-name span:nth-child(n) {
+      animation-delay: calc(0.1s * var(--i));
+    }
+    @keyframes fadeInUp {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
     .countdown {
-      margin-top: 20px;
-      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .countdown div {
+      padding: 1rem;
+      border: 1px solid white;
+      border-radius: 8px;
+      min-width: 80px;
     }
     .quote {
-      margin-top: 20px;
       font-style: italic;
-      color: #eee;
+      margin-top: 2rem;
     }
     .droplet {
       position: absolute;
-      width: 5px;
-      height: 5px;
+      width: 10px;
+      height: 10px;
       background: rgba(255,255,255,0.5);
       border-radius: 50%;
-      animation: drip 2s infinite;
+      animation: fall 5s linear infinite;
     }
-    @keyframes drip {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
+    @keyframes fall {
+      0% {
+        top: -10px;
+        left: calc(100vw * var(--x));
+        opacity: 1;
+      }
+      100% {
+        top: 100vh;
+        left: calc(100vw * var(--x));
+        opacity: 0;
+      }
+    }
+    #musicPlayer {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
-  <div class="intro" onclick="openInvitation()">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Wax_seal_icon.svg/512px-Wax_seal_icon.svg.png" alt="Seal" />
-    <p>Click to Open</p>
+
+  <div id="background"></div>
+
+  <div class="center-content">
+    <div class="image-container" id="imageContainer"></div>
+    <p class="click-text" id="clickText">Click to Open</p>
   </div>
 
-  <div class="main">
-    <div class="name" id="name"></div>
-    <div class="countdown" id="countdown"></div>
-    <div class="quote">
-      "He has put love and mercy between your hearts. Indeed, in that are signs for a people who reflect"<br/>
-      <strong>— Quran 30:21</strong>
+  <nav>
+    <ul>
+      <li><a href="#">ABOUT</a></li>
+      <li><a href="#">GALLERY</a></li>
+      <li><a href="#">CEREMONY</a></li>
+      <li><a href="#">RSVP</a></li>
+      <li><a href="#">BLOG</a></li>
+      <li><a href="#">REGISTRY</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1 class="animated-name" id="nameTitle"></h1>
+    <p>May 2, 2025 in Masjid Ar Rahah</p>
+
+    <div class="countdown" id="countdown">
+      <div><span id="days">00</span><br/>Days</div>
+      <div><span id="hours">00</span><br/>Hours</div>
+      <div><span id="minutes">00</span><br/>Minutes</div>
+      <div><span id="seconds">00</span><br/>Seconds</div>
     </div>
-    <audio id="bgm" autoplay loop>
-      <source src="song1.mp3" type="audio/mpeg">
-      <source src="song2.mp3" type="audio/mpeg">
-      Your browser does not support the audio tag.
-    </audio>
+
+    <p>Until we get married!</p>
+
+    <p class="quote">"He has put love and mercy between your hearts. Indeed, in that are signs for a people who reflect"<br/><strong>— Quran 30:21</strong></p>
   </div>
+
+  <audio id="musicPlayer" controls autoplay loop style="display: none;">
+    <source src="song1.mp3" type="audio/mp3">
+    <source src="song2.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
-    const nameEl = document.getElementById('name');
-    const bgm = document.getElementById('bgm');
-    const fullName = "Afifah & Firdaus";
+    // Animate name
+    const name = "Afifah & Firdaus";
+    const container = document.getElementById("nameTitle");
+    [...name].forEach((char, i) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.setProperty('--i', i);
+      container.appendChild(span);
+    });
 
-    function openInvitation() {
-      document.querySelector('.intro').style.display = 'none';
-      document.querySelector('.main').style.display = 'block';
-      bgm.play();
-
-      nameEl.innerHTML = '';
-      for (let i = 0; i < fullName.length; i++) {
-        const span = document.createElement('span');
-        span.textContent = fullName[i];
-        nameEl.appendChild(span);
-      }
-      generateDroplets();
-    }
-
-    function generateDroplets() {
-      for (let i = 0; i < 30; i++) {
-        const drop = document.createElement('div');
-        drop.classList.add('droplet');
-        drop.style.left = Math.random() * window.innerWidth + 'px';
-        drop.style.animationDuration = (2 + Math.random() * 2) + 's';
-        document.body.appendChild(drop);
-      }
-    }
-
-    function updateCountdown() {
-      const targetDate = new Date('May 02, 2025 00:00:00').getTime();
+    // Countdown
+    const countdown = () => {
+      const weddingDate = new Date("2025-05-02T00:00:00").getTime();
       const now = new Date().getTime();
-      const gap = targetDate - now;
+      const gap = weddingDate - now;
 
-      const days = Math.floor(gap / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((gap % (1000 * 60)) / 1000);
+      const second = 1000,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24;
 
-      document.getElementById('countdown').textContent =
-        `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds until we get married!`;
-    }
-    setInterval(updateCountdown, 1000);
+      const days = Math.floor(gap / day),
+            hours = Math.floor((gap % day) / hour),
+            minutes = Math.floor((gap % hour) / minute),
+            seconds = Math.floor((gap % minute) / second);
+
+      document.getElementById('days').innerText = days;
+      document.getElementById('hours').innerText = hours;
+      document.getElementById('minutes').innerText = minutes;
+      document.getElementById('seconds').innerText = seconds;
+    };
+    setInterval(countdown, 1000);
+
+    // Droplets
+    const createDroplet = () => {
+      const droplet = document.createElement('div');
+      droplet.classList.add('droplet');
+      droplet.style.setProperty('--x', Math.random());
+      droplet.style.left = `${Math.random() * 100}vw`;
+      document.body.appendChild(droplet);
+      setTimeout(() => droplet.remove(), 5000);
+    };
+    setInterval(createDroplet, 200);
+
+    // Click to open background and play music
+    const imageContainer = document.getElementById("imageContainer");
+    const clickText = document.getElementById("clickText");
+    const background = document.getElementById("background");
+    const musicPlayer = document.getElementById("musicPlayer");
+
+    imageContainer.addEventListener("click", () => {
+      background.classList.add("opened");
+      musicPlayer.play();
+      clickText.style.display = "none";  // Hide "Click to Open" text after click
+    });
   </script>
 </body>
 </html>
