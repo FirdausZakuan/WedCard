@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Afifah & Firdaus</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: url('your-wedding-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    header {
+      padding-top: 120px;
+      font-size: 48px;
+    }
+
+    .animated-name span {
+      opacity: 0;
+      display: inline-block;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    .animated-name span:nth-child(n) {
+      animation-delay: calc(0.1s * var(--i));
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .date-location {
+      margin: 20px 0;
+      font-size: 18px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .countdown div {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border: 1px solid white;
+      border-radius: 8px;
+      width: 100px;
+    }
+
+    .countdown span {
+      display: block;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .countdown label {
+      font-size: 14px;
+    }
+
+    .quote {
+      font-style: italic;
+      margin-top: 60px;
+      font-size: 16px;
+    }
+
+    .quote-author {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .music-player {
+      margin-top: 40px;
+    }
+
+    .droplets {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .droplet {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: fall 5s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="droplets">
+    <div class="droplet" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="droplet" style="left: 25%; animation-delay: 2s;"></div>
+    <div class="droplet" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="droplet" style="left: 55%; animation-delay: 3s;"></div>
+    <div class="droplet" style="left: 70%; animation-delay: 0.5s;"></div>
+    <div class="droplet" style="left: 85%; animation-delay: 1.5s;"></div>
+  </div>
+
+  <nav>
+    <a href="#">About</a>
+    <a href="#">Gallery</a>
+    <a href="#">Ceremony</a>
+    <a href="#">RSVP</a>
+    <a href="#">Blog</a>
+    <a href="#">Registry</a>
+  </nav>
+
+  <header>
+    <h1 class="animated-name">
+      <span style="--i:1">J</span><span style="--i:2">o</span><span style="--i:3">s</span><span style="--i:4">h</span><span style="--i:5"> </span>
+      <span style="--i:6">&</span><span style="--i:7"> </span>
+      <span style="--i:8">H</span><span style="--i:9">a</span><span style="--i:10">n</span><span style="--i:11">n</span><span style="--i:12">a</span>
+    </h1>
+    <div class="date-location">
+      November 22, 2025 in Los Angeles, CA
+    </div>
+  </header>
+
+  <section class="countdown">
+    <div><span id="days">0</span><label>Days</label></div>
+    <div><span id="hours">00</span><label>Hours</label></div>
+    <div><span id="minutes">00</span><label>Minutes</label></div>
+    <div><span id="seconds">00</span><label>Seconds</label></div>
+  </section>
+
+  <div>Until we get married!</div>
+
+  <div class="music-player">
+    <audio id="audio-player" autoplay></audio>
+  </div>
+
+  <section class="quote">
+    "When I saw you I fell in love, and you smiled because you knew."
+    <div class="quote-author">William Shakespeare</div>
+  </section>
+
+  <script>
+    const weddingDate = new Date("May 2, 2025 00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+
+      if (distance < 0) {
+        document.querySelector('.countdown').innerHTML = "<div>We're Married!</div>";
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Playlist autoplay + looping
+    const playlist = ['song1.mp3', 'song2.mp3', 'song3.mp3'];
+    let currentTrack = 0;
+    const audioPlayer = document.getElementById('audio-player');
+
+    function playTrack(index) {
+      audioPlayer.src = playlist[index];
+      audioPlayer.play();
+    }
+
+    audioPlayer.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      playTrack(currentTrack);
+    });
+
+    window.addEventListener('load', () => {
+      playTrack(currentTrack);
+    });
+  </script>
+
+</body>
+</html>
