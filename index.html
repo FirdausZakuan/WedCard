@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Afifah & Firdaus</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background: url('your-wedding-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+    nav {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 1rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    nav li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hero {
+      margin-top: 120px;
+      padding: 2rem;
+    }
+    .animated-name span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInUp 0.5s forwards;
+    }
+    .animated-name span:nth-child(n) {
+      animation-delay: calc(0.1s * var(--i));
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .countdown div {
+      padding: 1rem;
+      border: 1px solid white;
+      border-radius: 8px;
+      min-width: 80px;
+    }
+    .quote {
+      font-style: italic;
+      margin-top: 2rem;
+    }
+    .droplet {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      animation: fall 5s linear infinite;
+    }
+    @keyframes fall {
+      0% {
+        top: -10px;
+        left: calc(100vw * var(--x));
+        opacity: 1;
+      }
+      100% {
+        top: 100vh;
+        left: calc(100vw * var(--x));
+        opacity: 0;
+      }
+    }
+    #musicPlayer {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="#">ABOUT</a></li>
+      <li><a href="#">GALLERY</a></li>
+      <li><a href="#">CEREMONY</a></li>
+      <li><a href="#">RSVP</a></li>
+      <li><a href="#">BLOG</a></li>
+      <li><a href="#">REGISTRY</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1 class="animated-name" id="nameTitle"></h1>
+    <p>May 2, 2025 in Masjid Ar Rahah</p>
+
+    <div class="countdown" id="countdown">
+      <div><span id="days">00</span><br/>Days</div>
+      <div><span id="hours">00</span><br/>Hours</div>
+      <div><span id="minutes">00</span><br/>Minutes</div>
+      <div><span id="seconds">00</span><br/>Seconds</div>
+    </div>
+
+    <p>Until we get married!</p>
+
+    <p class="quote">"When I saw you I fell in love, and you smiled because you knew."<br/><strong>— William Shakespeare</strong></p>
+  </div>
+
+  <audio id="musicPlayer" controls autoplay loop>
+    <source src="song1.mp3" type="audio/mp3">
+    <source src="song2.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Animate name
+    const name = "Afifah & Firdaus";
+    const container = document.getElementById("nameTitle");
+    [...name].forEach((char, i) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.setProperty('--i', i);
+      container.appendChild(span);
+    });
+
+    // Countdown
+    const countdown = () => {
+      const weddingDate = new Date("2025-05-02T00:00:00").getTime();
+      const now = new Date().getTime();
+      const gap = weddingDate - now;
+
+      const second = 1000,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24;
+
+      const days = Math.floor(gap / day),
+            hours = Math.floor((gap % day) / hour),
+            minutes = Math.floor((gap % hour) / minute),
+            seconds = Math.floor((gap % minute) / second);
+
+      document.getElementById('days').innerText = days;
+      document.getElementById('hours').innerText = hours;
+      document.getElementById('minutes').innerText = minutes;
+      document.getElementById('seconds').innerText = seconds;
+    };
+    setInterval(countdown, 1000);
+
+    // Droplets
+    const createDroplet = () => {
+      const droplet = document.createElement('div');
+      droplet.classList.add('droplet');
+      droplet.style.setProperty('--x', Math.random());
+      droplet.style.left = `${Math.random() * 100}vw`;
+      document.body.appendChild(droplet);
+      setTimeout(() => droplet.remove(), 5000);
+    };
+    setInterval(createDroplet, 200);
+  </script>
+</body>
+</html>
